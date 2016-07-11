@@ -15,8 +15,7 @@
     },
     "permissions": [
         "clipboardWrite",
-        "clipboardRead",
-        {
+        "clipboardRead", {
             "fileSystem": [
                 "write",
                 "retainEntries",
@@ -24,5 +23,10 @@
             ]
         },
         "unlimitedStorage"
-    ]
+    ],
+    "sandbox": {
+        "pages": [
+            "www/index.html"
+        ]
+    }
 }

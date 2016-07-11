@@ -4,12 +4,33 @@ module.exports = function(grunt) {
         copy: {
             libs: {
                 files: [
-                    // includes files within path
-                    { expand: true, cwd: 'src/js', src: ['AppEntry.js'], dest: 'www/js', filter: 'isFile' },
+                    { expand: true, cwd: 'src/js/lib/', src: ['*.js'], dest: 'www/js', filter: 'isFile' }
                 ],
             },
+        },
+        babel: {
+            options: {
+                plugins: ['transform-react-jsx'], // npm install babel-plugin-transform-react-jsx
+                presets: ['es2015', 'react'] // npm install babel-preset-es2015 babel-preset-react
+            },
+            app: {
+                files: [
+                    {'src/js/View_AppEntry.js': 'src/js/jsx/AppEntry.jsx'},
+                    {'src/js/View_LoginForm.js': 'src/js/jsx/LoginForm.jsx'},
+                    {'src/js/View_SmartQApp.js': 'src/js/jsx/SmartQApp.jsx'},
+                ]
+            }
+        },
+        browserify: {
+            app: {
+                files: {
+                    'www/js/app.js': ['src/js/View_AppEntry.js']
+                }
+            }
         }
     });
     grunt.loadNpmTasks('grunt-contrib-copy');
-    //grunt.registerTask('App', ['less','babel','browserify:app','copy:app']);
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.registerTask('App', ['copy:libs','babel','browserify:app']);
 };
