@@ -20424,90 +20424,48 @@ module.exports = require('./lib/React');
 'use strict';
 
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-    console.log(7);
     document.addEventListener("deviceready", onDeviceReady, false);
 } else {
-    console.log(10);
     onDeviceReady();
 }
 
-/*
-function onDeviceReady() {
-    console.log("onDeviceReady");
-    $(document).ready(function() {
-        $("#TestLogion").click(function(event) {
-
-            console.log("TestLogion");
-
-            var iframe = document.getElementById('SandboxedApp');
-            var message = {
-                command: 'render',
-                context: { thing: 'world' }
-            };
-            iframe.contentWindow.postMessage(message, '*');
-        });
-
-            $("#toParent").click(function(event) {
-    	console.log("toParent");
-    	console.log("parent");
-    	parent.postMessage("Hello","*");
-    });
-    });
-
-
-
-    window.addEventListener('message', function(event) {
-    	console.log(event);
-    });
-}
-*/
-
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ViewLoginForm = require('./View_LoginForm.js');
+
 var ViewSmartQApp = require('./View_SmartQApp.js');
 
 function onDeviceReady() {
     $(document).ready(function () {
         var mode = $('#App').data('mode');
 
-        if (localStorage === "undefined") {
-            //　Chrome
+        console.log(location.pathname);
+
+        if (location.pathname == "/www/ChromeAppLogin.html") {
+            //　Sandbox
+            // Sandbox （sandbox.html）を iFrame で開く
+            // ChromeAppLogin.html は background.js　で指定
+            window.addEventListener('message', function (event) {
+                console.log('message');
+                console.log(event);
+            });
             ReactDOM.render(React.createElement(
                 'div',
                 null,
-                React.createElement(
-                    ViewLoginForm,
-                    null,
-                    'Parent'
-                ),
-                React.createElement('iframe', { id: 'SandboxedApp', src: 'index.html', width: '300', height: '200' })
+                React.createElement('iframe', { id: 'SandboxedApp', src: 'sandbox.html', width: '300', height: '200' })
             ), document.getElementById('App'));
+        } else if (location.pathname == "/www/sandbox.html") {
+            // Sandbox
+            // Sandbox モードでアプリを開く
+            ReactDOM.render(React.createElement(ViewSmartQApp, { mode: 'sandbox' }), document.getElementById('App'));
         } else {
             // Nomal
-            ReactDOM.render(React.createElement(ViewSmartQApp, { mode: 'hello' }), document.getElementById('App'));
+            // 通常 モードでアプリを開く
+            ReactDOM.render(React.createElement(ViewSmartQApp, { mode: 'nomal' }), document.getElementById('App'));
         }
     });
 }
 
-},{"./View_LoginForm.js":173,"./View_SmartQApp.js":174,"react":171,"react-dom":29}],173:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-
-module.exports = React.createClass({
-	displayName: 'exports',
-
-	render: function render() {
-		return React.createElement(
-			'div',
-			null,
-			'LoginForm'
-		);
-	}
-});
-
-},{"react":171}],174:[function(require,module,exports){
+},{"./View_SmartQApp.js":174,"react":171,"react-dom":29}],173:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -20515,22 +20473,42 @@ var React = require('react');
 module.exports = React.createClass({
 	displayName: "exports",
 
-	render: function render() {
-		console.log(localStorage);
+	onClick: function onClick() {
 		if (typeof localStorage === "undefined") {
-			return React.createElement(
-				"div",
-				null,
-				"Chorome App"
-			);
+			parent.postMessage("Hello", "*");
+			console.log("postMessage...");
 		} else {
-			return React.createElement(
-				"div",
-				null,
-				"App"
-			);
+			console.log("nomal save");
 		}
+	},
+	render: function render() {
+		return React.createElement(
+			"div",
+			null,
+			"LoginForm",
+			React.createElement(
+				"a",
+				{ onClick: this.onClick },
+				"Test"
+			)
+		);
 	}
 });
 
-},{"react":171}]},{},[172]);
+},{"react":171}],174:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ViewLoginForm = require('./View_LoginForm.js');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+
+	render: function render() {
+		console.log("7" + this.props.mode);
+		return React.createElement(ViewLoginForm, null);
+	}
+});
+
+},{"./View_LoginForm.js":173,"react":171}]},{},[172]);

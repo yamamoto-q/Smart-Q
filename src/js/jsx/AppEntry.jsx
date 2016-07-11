@@ -1,64 +1,48 @@
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-    console.log(7);
     document.addEventListener("deviceready", onDeviceReady, false);
 } else {
-    console.log(10);
     onDeviceReady();
 }
 
-/*
-function onDeviceReady() {
-    console.log("onDeviceReady");
-    $(document).ready(function() {
-        $("#TestLogion").click(function(event) {
-
-            console.log("TestLogion");
-
-            var iframe = document.getElementById('SandboxedApp');
-            var message = {
-                command: 'render',
-                context: { thing: 'world' }
-            };
-            iframe.contentWindow.postMessage(message, '*');
-        });
-
-            $("#toParent").click(function(event) {
-    	console.log("toParent");
-    	console.log("parent");
-    	parent.postMessage("Hello","*");
-    });
-    });
-
-
-
-    window.addEventListener('message', function(event) {
-    	console.log(event);
-    });
-}
-*/
-
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ViewLoginForm = require('./View_LoginForm.js');
+
 var ViewSmartQApp = require('./View_SmartQApp.js');
 
 function onDeviceReady() {
     $(document).ready(function() {
         var mode = $('#App').data('mode');
 
-        if (localStorage === "undefined") {
-            //　Chrome
+        console.log(location.pathname);
+
+        if (location.pathname == "/www/ChromeAppLogin.html") {
+            //　Sandbox
+            // Sandbox （sandbox.html）を iFrame で開く
+            // ChromeAppLogin.html は background.js　で指定
+            window.addEventListener('message', function(event) {
+                console.log('message');
+                console.log(event);
+            });
             ReactDOM.render(
                 <div>
-                    <ViewLoginForm>Parent</ViewLoginForm>
-                    <iframe id="SandboxedApp" src="index.html" width="300" height="200"></iframe>
+                    <iframe id="SandboxedApp" src="sandbox.html" width="300" height="200"></iframe>
                 </div>,
                 document.getElementById('App')
             );
+
+        }else if(location.pathname == "/www/sandbox.html"){
+            // Sandbox
+            // Sandbox モードでアプリを開く
+            ReactDOM.render(
+                <ViewSmartQApp mode="sandbox"/>,
+                document.getElementById('App')
+            );
+            
         }else{
             // Nomal
+            // 通常 モードでアプリを開く
             ReactDOM.render(
-                <ViewSmartQApp mode="hello" />,
+                <ViewSmartQApp mode="nomal"/>,
                 document.getElementById('App')
             );
         }

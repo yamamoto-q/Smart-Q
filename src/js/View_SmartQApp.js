@@ -1,24 +1,14 @@
-"use strict";
+'use strict';
 
 var React = require('react');
+var ViewLoginForm = require('./View_LoginForm.js');
 
 module.exports = React.createClass({
-	displayName: "exports",
+	displayName: 'exports',
+
 
 	render: function render() {
-		console.log(localStorage);
-		if (typeof localStorage === "undefined") {
-			return React.createElement(
-				"div",
-				null,
-				"Chorome App"
-			);
-		} else {
-			return React.createElement(
-				"div",
-				null,
-				"App"
-			);
-		}
+		console.log("7" + this.props.mode);
+		return React.createElement(ViewLoginForm, null);
 	}
 });

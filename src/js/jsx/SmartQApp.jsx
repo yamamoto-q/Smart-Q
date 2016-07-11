@@ -1,16 +1,12 @@
 var React = require('react');
+var ViewLoginForm = require('./View_LoginForm.js');
 
 module.exports = React.createClass({
+	
 	render: function() {
-		console.log(localStorage);
-		if (typeof localStorage === "undefined") {
-			return(
-				<div>Chorome App</div>
-			)
-		}else{
-			return(
-				<div>App</div>
-			)
-		}
+		console.log("7" + this.props.mode);
+		return(
+			<ViewLoginForm />
+		)
 	}
 });
