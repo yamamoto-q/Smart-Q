@@ -47,8 +47,9 @@ var ViewSmartQApp = require('./View_SmartQApp.js');
 function onDeviceReady() {
     $(document).ready(function () {
         var mode = $('#App').data('mode');
-        //console.log(mode);
-        if (mode && mode == "sandbox-parent") {
+
+        if (localStorage === "undefined") {
+            //　Chrome
             ReactDOM.render(React.createElement(
                 'div',
                 null,
@@ -60,6 +61,7 @@ function onDeviceReady() {
                 React.createElement('iframe', { id: 'SandboxedApp', src: 'index.html', width: '300', height: '200' })
             ), document.getElementById('App'));
         } else {
+            // Nomal
             ReactDOM.render(React.createElement(ViewSmartQApp, { mode: 'hello' }), document.getElementById('App'));
         }
     });

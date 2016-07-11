@@ -2,9 +2,8 @@ var React = require('react');
 
 module.exports = React.createClass({
 	render: function() {
-		console.log(parent);
-		console.log(this.props.mode);
-		if(typeof this.props.mode === "undefined"){
+		console.log(localStorage);
+		if (typeof localStorage === "undefined") {
 			return(
 				<div>Chorome App</div>
 			)
@@ -13,6 +12,5 @@ module.exports = React.createClass({
 				<div>App</div>
 			)
 		}
-		
 	}
 });

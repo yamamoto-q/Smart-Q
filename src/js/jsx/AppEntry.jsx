@@ -45,8 +45,9 @@ var ViewSmartQApp = require('./View_SmartQApp.js');
 function onDeviceReady() {
     $(document).ready(function() {
         var mode = $('#App').data('mode');
-        //console.log(mode);
-        if(mode && mode == "sandbox-parent"){
+
+        if (localStorage === "undefined") {
+            //　Chrome
             ReactDOM.render(
                 <div>
                     <ViewLoginForm>Parent</ViewLoginForm>
@@ -55,6 +56,7 @@ function onDeviceReady() {
                 document.getElementById('App')
             );
         }else{
+            // Nomal
             ReactDOM.render(
                 <ViewSmartQApp mode="hello" />,
                 document.getElementById('App')
