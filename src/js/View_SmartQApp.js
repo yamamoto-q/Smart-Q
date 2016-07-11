@@ -6,6 +6,7 @@ module.exports = React.createClass({
 	displayName: "exports",
 
 	render: function render() {
+		console.log(this.props.mode);
 		if (typeof this.props.mode == "undefined") {
 			return React.createElement(
 				"div",
