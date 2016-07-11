@@ -45,7 +45,7 @@ var ViewSmartQApp = require('./View_SmartQApp.js');
 function onDeviceReady() {
     $(document).ready(function() {
         var mode = $('#App').data('mode');
-        console.log(mode);
+        //console.log(mode);
         if(mode && mode == "sandbox-parent"){
             ReactDOM.render(
                 <div>

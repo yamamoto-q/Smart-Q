@@ -20470,7 +20470,7 @@ var ViewSmartQApp = require('./View_SmartQApp.js');
 function onDeviceReady() {
     $(document).ready(function () {
         var mode = $('#App').data('mode');
-        console.log(mode);
+        //console.log(mode);
         if (mode && mode == "sandbox-parent") {
             ReactDOM.render(React.createElement(
                 'div',
@@ -20514,18 +20514,19 @@ module.exports = React.createClass({
 	displayName: "exports",
 
 	render: function render() {
+		console.log(parent);
 		console.log(this.props.mode);
-		if (typeof this.props.mode == "undefined") {
+		if (typeof this.props.mode === "undefined") {
 			return React.createElement(
 				"div",
 				null,
-				"App"
+				"Chorome App"
 			);
 		} else {
 			return React.createElement(
 				"div",
 				null,
-				"Chorome App"
+				"App"
 			);
 		}
 	}
