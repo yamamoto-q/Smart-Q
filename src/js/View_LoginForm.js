@@ -1,27 +1,34 @@
-"use strict";
+'use strict';
 
 var React = require('react');
+var Ctrl_Strage = require('./Ctrl_Strage.js');
 
 module.exports = React.createClass({
-	displayName: "exports",
+	displayName: 'exports',
 
+	componentDidMount: function componentDidMount() {
+		Ctrl_Strage.Store.addChangeSavedDataListener(function () {
+			console.log("addLoadedListener");
+			console.log(Ctrl_Strage.Store.getSavedValue());
+		});
+
+		Ctrl_Strage.Action.load();
+	},
 	onClick: function onClick() {
-		if (typeof localStorage === "undefined") {
-			parent.postMessage("Hello", "*");
-			console.log("postMessage...");
-		} else {
-			console.log("nomal save");
-		}
+		Ctrl_Strage.Action.save("test", "Hello 2");
 	},
 	render: function render() {
 		return React.createElement(
-			"div",
+			'div',
 			null,
-			"LoginForm",
 			React.createElement(
-				"a",
-				{ onClick: this.onClick },
-				"Test"
+				'p',
+				null,
+				React.createElement(
+					'a',
+					{ onClick: this.onClick },
+					'Test'
+				)
 			)
 		);
 	}

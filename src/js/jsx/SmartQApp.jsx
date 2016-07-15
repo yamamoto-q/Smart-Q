@@ -1,12 +1,17 @@
 var React = require('react');
 var ViewLoginForm = require('./View_LoginForm.js');
 
+var Ctrl_Strage = require('./Ctrl_Strage.js');
+
 module.exports = React.createClass({
-	
+	getInitialState: function getInitialState() {
+		return {
+			mode: this.props.mode
+		}
+	},
 	render: function() {
-		console.log("7" + this.props.mode);
 		return(
-			<ViewLoginForm />
+			<ViewLoginForm mode={this.props.mode}/>
 		)
 	}
 });

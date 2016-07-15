@@ -1,10 +1,33 @@
-
 module.exports = function(grunt) {
     grunt.initConfig({
         copy: {
             libs: {
                 files: [
                     { expand: true, cwd: 'src/js/lib/', src: ['*.js'], dest: 'www/js', filter: 'isFile' }
+                ],
+            },
+            sandbox: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'www/',
+                        src: ['index.html'],
+                        dest: 'www/',
+                        rename: function(dest, src) {
+                            return dest + 'sandbox.html';
+                        },
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'www/',
+                        src: ['index.html'],
+                        dest: 'www/',
+                        rename: function(dest, src) {
+                            return dest + 'ChromeAppLogin.html';
+                        },
+                        filter: 'isFile'
+                    }
                 ],
             },
         },
@@ -15,9 +38,9 @@ module.exports = function(grunt) {
             },
             app: {
                 files: [
-                    {'src/js/View_AppEntry.js': 'src/js/jsx/AppEntry.jsx'},
-                    {'src/js/View_LoginForm.js': 'src/js/jsx/LoginForm.jsx'},
-                    {'src/js/View_SmartQApp.js': 'src/js/jsx/SmartQApp.jsx'},
+                    { 'src/js/View_AppEntry.js': 'src/js/jsx/AppEntry.jsx' },
+                    { 'src/js/View_LoginForm.js': 'src/js/jsx/LoginForm.jsx' },
+                    { 'src/js/View_SmartQApp.js': 'src/js/jsx/SmartQApp.jsx' },
                 ]
             }
         },
@@ -32,5 +55,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-browserify');
-    grunt.registerTask('App', ['copy:libs','babel','browserify:app']);
+    grunt.registerTask('App', ['copy', 'babel', 'browserify:app']);
 };

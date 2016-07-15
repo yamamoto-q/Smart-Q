@@ -1,18 +1,24 @@
 var React = require('react');
+var Ctrl_Strage = require('./Ctrl_Strage.js');
 
 module.exports = React.createClass({
+	componentDidMount: function componentDidMount() {
+		Ctrl_Strage.Store.addChangeSavedDataListener(function(){
+			console.log("addLoadedListener");
+			console.log(Ctrl_Strage.Store.getSavedValue());
+		});
+
+		Ctrl_Strage.Action.load();
+	},
 	onClick:function(){
-		if (typeof localStorage === "undefined") {
-			parent.postMessage("Hello","*");
-			console.log("postMessage...");
-		}else{
-			console.log("nomal save");
-		}
+		Ctrl_Strage.Action.save("test", "Hello 2");
 	},
 	render: function() {
 		return(
-			<div>LoginForm
-				<a onClick={this.onClick}>Test</a>
+			<div>
+				<p>
+					<a onClick={this.onClick}>Test</a>
+				</p>
 			</div>
 		)
 	}

@@ -11,18 +11,15 @@ var ViewSmartQApp = require('./View_SmartQApp.js');
 
 function onDeviceReady() {
     $(document).ready(function() {
-        var mode = $('#App').data('mode');
 
-        console.log(location.pathname);
-
+        /**
+        * Sandbox 対応
+        * index.html ChromeAppLogin.html　sandbox.html が必要
+        **/
         if (location.pathname == "/www/ChromeAppLogin.html") {
-            //　Sandbox
-            // Sandbox （sandbox.html）を iFrame で開く
-            // ChromeAppLogin.html は background.js　で指定
-            window.addEventListener('message', function(event) {
-                console.log('message');
-                console.log(event);
-            });
+            // A. Sandbox の親として開かれた場合（Chrome Apps）
+            //　Sanboxとして samdbox.hrml をIFRAMEで開く ... B
+            // （Chrome Appsの場合、background.js で ChromeAppLogin.html が指定されている）
             ReactDOM.render(
                 <div>
                     <iframe id="SandboxedApp" src="sandbox.html" width="300" height="200"></iframe>
@@ -31,13 +28,13 @@ function onDeviceReady() {
             );
 
         }else if(location.pathname == "/www/sandbox.html"){
-            // Sandbox
-            // Sandbox モードでアプリを開く
+            // B. Sandbox として開かれた場合
+            // 
             ReactDOM.render(
                 <ViewSmartQApp mode="sandbox"/>,
                 document.getElementById('App')
             );
-            
+
         }else{
             // Nomal
             // 通常 モードでアプリを開く
