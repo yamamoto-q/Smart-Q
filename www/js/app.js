@@ -21197,6 +21197,42 @@ module.exports = {
     Store: Store
 }
 },{"events":1,"flux":28,"object-assign":31}],177:[function(require,module,exports){
+var _context, _credentials, _QUser;
+
+function _authentication(context, email, password, successCallBack, failCallback) {
+	_self(context, email, password, successCallBack, failCallback);
+}
+
+function _self(context, email, password, successCallBack, failCallback){
+    var credentials = $.base64.encode(email + ":" + password);
+
+    $.ajax({
+            type: 'GET',
+            url: _context + "/API/User/Quser/self",
+            dataType: 'json',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + credentials);
+            }
+        })
+        .done(function(data, textStatus, jqXHR) {
+            successCallBack(data);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            failCallback(jqXHR.status);
+        });
+}
+
+
+module.exports = {
+    authentication: function(context, email, password, successCallBack, failCallback) {
+        _authentication(context, email, password, successCallBack, failCallback);
+    },
+    self: function(context, email, password, successCallBack, failCallback) {
+        _self(context, email, password, successCallBack, failCallback);
+    }
+}
+
+},{}],178:[function(require,module,exports){
 'use strict';
 
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
@@ -21238,11 +21274,13 @@ function onDeviceReady() {
     });
 }
 
-},{"./View_SmartQApp.js":179,"react":175,"react-dom":33}],178:[function(require,module,exports){
+},{"./View_SmartQApp.js":180,"react":175,"react-dom":33}],179:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var Ctrl_Strage = require('./Ctrl_Strage.js');
+
+var QUser = require('./QUser.js');
 
 module.exports = React.createClass({
 	displayName: 'exports',
@@ -21275,7 +21313,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./Ctrl_Strage.js":176,"react":175}],179:[function(require,module,exports){
+},{"./Ctrl_Strage.js":176,"./QUser.js":177,"react":175}],180:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -21296,4 +21334,4 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./Ctrl_Strage.js":176,"./View_LoginForm.js":178,"react":175}]},{},[177]);
+},{"./Ctrl_Strage.js":176,"./View_LoginForm.js":179,"react":175}]},{},[178]);

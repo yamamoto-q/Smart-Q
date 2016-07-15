@@ -3,6 +3,8 @@
 var React = require('react');
 var Ctrl_Strage = require('./Ctrl_Strage.js');
 
+var QUser = require('./QUser.js');
+
 module.exports = React.createClass({
 	displayName: 'exports',
 

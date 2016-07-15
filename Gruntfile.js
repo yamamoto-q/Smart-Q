@@ -6,6 +6,11 @@ module.exports = function(grunt) {
                     { expand: true, cwd: 'src/js/lib/', src: ['*.js'], dest: 'www/js', filter: 'isFile' }
                 ],
             },
+            QuestetraLib: {
+                files: [
+                    { expand: true, cwd: 'QuestetraLib/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
+                ],
+            },
             sandbox: {
                 files: [
                     {
