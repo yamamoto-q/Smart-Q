@@ -21027,6 +21027,50 @@ var EventEmitter = require("events").EventEmitter;
 var assign = require("object-assign");
 var Dispatcher = require('flux').Dispatcher;
 
+var _store = {
+	qUsers : []
+}
+
+var EVENT = {
+	QUSERS_CHANGE:"qusers_chenge"
+}
+
+var Store = assign({}, EventEmitter.prototype, {
+	getQUsers:function(){
+		return _store.qUsers;
+	},
+	addQUsersChangeListener:function(callback){
+		this.on(EVENT.QUSERS_CHANGE, callback);
+	},
+	emitQUsersChange:function(){
+		this.emit(EVENT.QUSERS_CHANGE);
+	},
+});
+
+module.exports = {
+    //Action: Action,
+    Store: Store
+}
+
+//
+var Ctrl_Strage = require('./Ctrl_Strage.js');
+
+Ctrl_Strage.Store.addChangeSavedDataListener(function(){
+	var SavedValue = Ctrl_Strage.Store.getSavedValue();
+	var qUsers = [];
+	if(typeof SavedValue.qUsers !== "undefined"){
+		qUser = SavedValue.qUsers;
+	}
+
+	_store.qUsers = qUsers;
+	Store.emitQUsersChange();
+});
+Ctrl_Strage.Action.load();
+},{"./Ctrl_Strage.js":177,"events":1,"flux":28,"object-assign":31}],177:[function(require,module,exports){
+var EventEmitter = require("events").EventEmitter;
+var assign = require("object-assign");
+var Dispatcher = require('flux').Dispatcher;
+
 // Dispatcher をシングルトンで提供
 var dispatcherInstance = null;
 var dispatcher = {
@@ -21196,7 +21240,7 @@ module.exports = {
     Action: Action,
     Store: Store
 }
-},{"events":1,"flux":28,"object-assign":31}],177:[function(require,module,exports){
+},{"events":1,"flux":28,"object-assign":31}],178:[function(require,module,exports){
 var _context, _credentials, _QUser;
 
 function _authentication(context, email, password, successCallBack, failCallback) {
@@ -21232,7 +21276,7 @@ module.exports = {
     }
 }
 
-},{}],178:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 'use strict';
 
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
@@ -21274,27 +21318,36 @@ function onDeviceReady() {
     });
 }
 
-},{"./View_SmartQApp.js":180,"react":175,"react-dom":33}],179:[function(require,module,exports){
+},{"./View_SmartQApp.js":181,"react":175,"react-dom":33}],180:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var Ctrl_Strage = require('./Ctrl_Strage.js');
-
 var QUser = require('./QUser.js');
+
+var Ctrl_QUser = require('./Ctrl_QUser.js');
 
 module.exports = React.createClass({
 	displayName: 'exports',
 
+	getInitialState: function getInitialState() {
+		return {
+			qUsers: []
+		};
+	},
 	componentDidMount: function componentDidMount() {
-		Ctrl_Strage.Store.addChangeSavedDataListener(function () {
-			console.log("addLoadedListener");
-			console.log(Ctrl_Strage.Store.getSavedValue());
+		var self = this;
+		Ctrl_QUser.Store.addQUsersChangeListener(function () {
+			console.log('addQUsersChangeListener');
+			var qUsers = Ctrl_QUser.Store.getQUsers();
+			console.log(qUsers);
+			if (self.isMounted()) {
+				self.setState({
+					qUsers: qUsers
+				});
+			}
 		});
 
-		Ctrl_Strage.Action.load();
-	},
-	onClick: function onClick() {
-		Ctrl_Strage.Action.save("test", "Hello 2");
+		//ModelsCtrl.Action.getAllProcessModelInfos();
 	},
 	render: function render() {
 		return React.createElement(
@@ -21305,7 +21358,7 @@ module.exports = React.createClass({
 				null,
 				React.createElement(
 					'a',
-					{ onClick: this.onClick },
+					{ className: 'btn' },
 					'Test'
 				)
 			)
@@ -21313,13 +21366,11 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./Ctrl_Strage.js":176,"./QUser.js":177,"react":175}],180:[function(require,module,exports){
+},{"./Ctrl_QUser.js":176,"./QUser.js":178,"react":175}],181:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ViewLoginForm = require('./View_LoginForm.js');
-
-var Ctrl_Strage = require('./Ctrl_Strage.js');
 
 module.exports = React.createClass({
 	displayName: 'exports',
@@ -21334,4 +21385,4 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./Ctrl_Strage.js":176,"./View_LoginForm.js":179,"react":175}]},{},[178]);
+},{"./View_LoginForm.js":180,"react":175}]},{},[179]);

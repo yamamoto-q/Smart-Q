@@ -3,11 +3,14 @@ module.exports = function(grunt) {
         copy: {
             libs: {
                 files: [
-                    { expand: true, cwd: 'src/js/lib/', src: ['*.js'], dest: 'www/js', filter: 'isFile' }
+                    // jQuery などの直接HTMLから参照するライブラリをコピーする
+                    { expand: true, cwd: 'src/js/lib/', src: ['*.js'], dest: 'www/js', filter: 'isFile' },
+                    { expand: true, cwd: 'src/css/lib/', src: ['*.css'], dest: 'www/css', filter: 'isFile' }
                 ],
             },
             QuestetraLib: {
                 files: [
+                    // https://github.com/yamamoto-q/Questetra をコピーする
                     { expand: true, cwd: 'QuestetraLib/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
                 ],
             },

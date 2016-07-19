@@ -1,25 +1,34 @@
 var React = require('react');
-var Ctrl_Strage = require('./Ctrl_Strage.js');
-
 var QUser = require('./QUser.js');
 
+var Ctrl_QUser = require('./Ctrl_QUser.js');
+
 module.exports = React.createClass({
+	getInitialState: function getInitialState() {
+		return {
+			qUsers:[]
+		};
+	},
 	componentDidMount: function componentDidMount() {
-		Ctrl_Strage.Store.addChangeSavedDataListener(function(){
-			console.log("addLoadedListener");
-			console.log(Ctrl_Strage.Store.getSavedValue());
+		var self = this;
+		Ctrl_QUser.Store.addQUsersChangeListener(function () {
+			console.log('addQUsersChangeListener');
+			var qUsers = Ctrl_QUser.Store.getQUsers();
+			console.log(qUsers);
+			if (self.isMounted()) {
+				self.setState({
+					qUsers: qUsers
+				});
+			}
 		});
 
-		Ctrl_Strage.Action.load();
-	},
-	onClick:function(){
-		Ctrl_Strage.Action.save("test", "Hello 2");
+		//ModelsCtrl.Action.getAllProcessModelInfos();
 	},
 	render: function() {
 		return(
 			<div>
 				<p>
-					<a onClick={this.onClick}>Test</a>
+					<a className="btn">Test</a>
 				</p>
 			</div>
 		)

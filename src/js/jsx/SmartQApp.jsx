@@ -1,7 +1,7 @@
 var React = require('react');
 var ViewLoginForm = require('./View_LoginForm.js');
 
-var Ctrl_Strage = require('./Ctrl_Strage.js');
+
 
 module.exports = React.createClass({
 	getInitialState: function getInitialState() {
