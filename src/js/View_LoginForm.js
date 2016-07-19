@@ -5,6 +5,8 @@ var QUser = require('./QUser.js');
 
 var Ctrl_QUser = require('./Ctrl_QUser.js');
 
+var View_Middle = require('./Middle.js');
+
 module.exports = React.createClass({
 	displayName: 'exports',
 
@@ -30,7 +32,7 @@ module.exports = React.createClass({
 	},
 	render: function render() {
 		return React.createElement(
-			'div',
+			View_Middle,
 			null,
 			React.createElement(
 				'p',

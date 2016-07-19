@@ -64,10 +64,21 @@ module.exports = function(grunt) {
                     'www/js/app.js': ['src/js/View_AppEntry.js']
                 }
             }
+        },
+        less:{
+            develop: {
+                options: {
+                    compress: true
+                },
+                files: {
+                    "www/css/style.css": "src/css/less/style.less"
+                }
+            }
         }
     });
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-browserify');
-    grunt.registerTask('App', ['copy', 'babel', 'browserify:app']);
+    grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.registerTask('App', ['copy', 'babel', 'browserify:app', 'less']);
 };

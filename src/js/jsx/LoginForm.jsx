@@ -3,6 +3,8 @@ var QUser = require('./QUser.js');
 
 var Ctrl_QUser = require('./Ctrl_QUser.js');
 
+var View_Middle = require('./Middle.js');
+
 module.exports = React.createClass({
 	getInitialState: function getInitialState() {
 		return {
@@ -26,11 +28,11 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return(
-			<div>
+			<View_Middle>
 				<p>
 					<a className="btn">Test</a>
 				</p>
-			</div>
+			</View_Middle>
 		)
 	}
 });
