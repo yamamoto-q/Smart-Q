@@ -12,7 +12,13 @@ module.exports = function(grunt) {
                 files: [
                     // https://github.com/yamamoto-q/Questetra をコピーする
                     { expand: true, cwd: 'QuestetraLib/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
-                ],
+                ]
+            },
+            ReactLayoutElem: {
+                files: [
+                    // https://github.com/yamamoto-q/Questetra をコピーする
+                    { expand: true, cwd: 'ReactLayoutElement/dist/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
+                ]
             },
             sandbox: {
                 files: [
