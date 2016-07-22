@@ -11,13 +11,13 @@ module.exports = function(grunt) {
             QuestetraLib: {
                 files: [
                     // https://github.com/yamamoto-q/Questetra をコピーする
-                    { expand: true, cwd: 'QuestetraLib/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
+                    { expand: true, cwd: 'src/js/submodules/Questetra/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
                 ]
             },
             ReactLayoutElem: {
                 files: [
                     // https://github.com/yamamoto-q/Questetra をコピーする
-                    { expand: true, cwd: 'ReactLayoutElement/dist/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
+                    { expand: true, cwd: 'src/js/submodules/ReactLayoutElem/dist/', src: ['*.js'], dest: 'src/js', filter: 'isFile' }
                 ]
             },
             sandbox: {
